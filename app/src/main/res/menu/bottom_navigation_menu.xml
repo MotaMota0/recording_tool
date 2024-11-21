@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <item
+            android:id="@+id/menu_technica"
+            android:title="Техника"
+            android:icon="@drawable/ic_technica" />
+        <item
+            android:id="@+id/menu_shashtaraz"
+            android:title="Шаштараз"
+            android:icon="@drawable/ic_shashtaraz" />
+        <item
+            android:id="@+id/menu_salon"
+            android:title="Сұлулық салон"
+            android:icon="@drawable/ic_salon" />
+        <item
+            android:id="@+id/menu_clining"
+            android:title="Клининг"
+            android:icon="@drawable/ic_clining" />
+
+
+</menu>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:onClick="SaveDataTime"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/tvBookingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Book a Service"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Выпадающий список для выбора услуги -->
+        <Spinner
+            android:id="@+id/spinnerServices"
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:layout_marginBottom="16dp"
+            android:spinnerMode="dropdown" />
+
+        <!-- Календарь -->
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Выбор времени -->
+        <TextView
+            android:id="@+id/idSelectTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:padding="8dp"
+            android:text="Уақыт таңдаңыз"
+            android:textSize="24sp" />
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:timePickerMode="spinner" />
+
+        <!-- Кнопка для подтверждения бронирования -->
+        <Button
+            android:id="@+id/btnConfirmBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#9EA2A2"
+            android:fontFamily="sans-serif-light"
+            android:onClick="SaveDataTime"
+            android:text="Жазылу"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>
