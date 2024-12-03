@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.record_tool.Booking.Booking;
 import com.example.record_tool.Corzina.FragmentClient;
+import com.example.record_tool.MasterReg.MasterAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,10 +41,11 @@ public class ClientActivity extends AppCompatActivity {
 
     private Button buttonConfirmBooking;
     private TimePicker timePicker;
-    private Spinner spinnerServices;
+    //private Spinner spinnerServices;
     private CalendarView calendarView;
     private TextView tvBookingTitle;
     private EditText editText;
+    private String selectedTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,24 +55,23 @@ public class ClientActivity extends AppCompatActivity {
         // Инициализация UI элементов
         buttonConfirmBooking = findViewById(R.id.btnConfirmBooking);
         timePicker = findViewById(R.id.timePicker);
-        spinnerServices = findViewById(R.id.spinnerServices);
+        //spinnerServices = findViewById(R.id.spinnerServices);
         calendarView = findViewById(R.id.calendarView);
         tvBookingTitle = findViewById(R.id.idSelectTime);
         editText = findViewById(R.id.editTextText);
 
 
-        String[] services = {"Haircut", "Nail Service", "Massage", "Facial"};
-
-
+        //String[] services = {"Haircut", "Nail Service", "Massage", "Facial"};
         // Создаем адаптер и устанавливаем его для Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                services
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerServices.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        //        this,
+        //        android.R.layout.simple_spinner_item,
+        //        services
+        //);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinnerServices.setAdapter(adapter);
 
+        selectedTitle = "";
         // Устанавливаем обработчик для BottomNavigationView
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -84,9 +85,10 @@ public class ClientActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NotNull MenuItem menuItem) {
                 Fragment selectedFragment = null;
-
+                selectedTitle= menuItem.getTitle().toString();
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.menu_shashtaraz) {
+
                     selectedFragment = new FragmentClient();
                 } else if (itemId == R.id.menu_salon) {
                     selectedFragment = new FragmentClient(); // Замените на другой фрагмент при необходимости
@@ -110,47 +112,75 @@ public class ClientActivity extends AppCompatActivity {
                 SetDataToFirebase();
             }
         });
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                // Делаем форматирование даты в нужном формате
+                String selectedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
+                // Обновляем дату в TextView (или можете записать в переменную)
+                tvBookingTitle.setText(selectedDate);
+            }
+        });
     }
 
     // Метод для добавления данных в Firebase
     public void SetDataToFirebase() {
         // Получаем выбранную услугу из спиннера
-        String selectedService = spinnerServices.getSelectedItem().toString();
+        //String selectedService = spinnerServices.getSelectedItem().toString();
 
         // Получаем отформатированную дату с календаря
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String date = sdf.format(calendarView.getDate());
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        //String date = sdf.format(calendarView.getDate());
+
+        // Получаем отформатированную дату с календаря
+        String date = tvBookingTitle.getText().toString();
+
 
         // Получаем время из timePicker
-        int hour = timePicker.getHour();
+        int hour = timePicker.getHour(); // Для Android 6.0 и выше
         int minute = timePicker.getMinute();
         String time = String.format(Locale.getDefault(), "%02d:%02d:00", hour, minute);
 
-        // Получаем заголовок из TextView (если нужно)
-        String title = tvBookingTitle.getText().toString();
+
+
         String name = editText.getText().toString();
+        String slctTitle = selectedTitle;
+
+        //Получение значение из класса MasterAdaper
+        String masterName = MasterAdapter.MasterViewHolder.getMasterName();
         // Создаем объект бронирования
-        Booking booking = new Booking(selectedService, date, time, title,name);
+        Booking booking = new Booking(slctTitle, date, time,name,masterName);
 
         // Получаем экземпляр Firebase Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Добавляем данные в Firestore
         db.collection("bookings")
-                .add(booking)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TAG", "Booking saved! Document ID: " + documentReference.getId());
-                        Toast.makeText(ClientActivity.this, "Booking saved!", Toast.LENGTH_SHORT).show();
+                .whereEqualTo("date", date)
+                .whereEqualTo("time", time)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Если запись с таким временем уже существует
+                        Toast.makeText(ClientActivity.this, "Время уже забронировано! Выберите другое время", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Если записи нет, добавляем новое бронирование
+                        db.collection("bookings")
+                                .add(booking)
+                                .addOnSuccessListener(documentReference -> {
+                                    Log.d("TAG", "Booking saved! Document ID: " + documentReference.getId());
+
+                                    Toast.makeText(ClientActivity.this, "Запись успешно сохранена!", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w("TAG", "Error adding booking", e);
+                                    Toast.makeText(ClientActivity.this, "Ошибка при сохранении записи", Toast.LENGTH_SHORT).show();
+                                });
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error adding booking", e);
-                        Toast.makeText(ClientActivity.this, "Error saving booking", Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    Log.w("TAG", "Error checking booking time", e);
+                    Toast.makeText(ClientActivity.this, "Ошибка при проверке времени", Toast.LENGTH_SHORT).show();
                 });
     }
 

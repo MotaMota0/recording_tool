@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MasterActivity"
+            android:name=".MasterReg.MasterActivity"
             android:exported="false" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -67,7 +67,38 @@
         </activity>
 
 
+        <activity
+            android:name=".MasterReg.MasterListForClient"
+            android:exported="false"
+            android:isolatedProcess="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
+        <activity
+            android:name=".MasterReg.MasterAdapter"
+            android:exported="false"
+            android:isolatedProcess="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MasterReg.Master"
+            android:exported="false"
+            android:isolatedProcess="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainScreenForMaster"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>

@@ -56,8 +56,11 @@ public class RecordData extends AppCompatActivity {
                 // Optional: Get title from TextView (if needed)
                 String title = tvBookingTitle.getText().toString();
 
-                // Create a Booking object
-                Booking booking = new Booking(selectedService, date, time, title,name);
+
+            }
+            });
+                /*// Create a Booking object
+                Booking booking = new Booking(selectedService, date, time,name);
 
                 // Get Firebase Firestore instance
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -81,5 +84,8 @@ public class RecordData extends AppCompatActivity {
                         });
             }
         });
-    }
-}
+    }*/
+            }
+        }
+
+

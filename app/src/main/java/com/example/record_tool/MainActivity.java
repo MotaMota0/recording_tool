@@ -10,6 +10,9 @@ import androidx.activity.EdgeToEdge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.record_tool.MasterReg.MasterActivity;
+import com.example.record_tool.MasterReg.MasterListForClient;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btClient = findViewById(R.id.idBtnClient);
         btClient.setOnClickListener(view ->{
-                Intent   intent = new Intent(this, ClientActivity.class);
+                Intent   intent = new Intent(this, MasterListForClient.class);
                 startActivity(intent);
         });
         Button btMaster = findViewById(R.id.idBtnMaster);

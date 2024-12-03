@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".MasterActivity">
+    app:layout_constraintCircleRadius="30dp"
+    tools:context=".MasterReg.MasterActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="413dp"
+        android:layout_height="611dp"
         android:backgroundTint="@color/colorPrimaryCool"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
 
@@ -23,14 +24,18 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="331dp"
+                android:layout_height="116dp"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="40dp"
+                android:background="#8BC34A"
+                android:backgroundTint="#A4A4A4"
                 android:fontFamily="sans-serif-light"
                 android:text="Аты-жөніңіз"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
                 android:textSize="24sp" />
 
             <EditText
@@ -53,15 +58,21 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="40dp"
+                android:background="#8BC34A"
+                android:backgroundTint="#A4A4A4"
+                android:fallbackLineSpacing="true"
                 android:fontFamily="sans-serif-light"
+                android:outlineProvider="none"
                 android:text="Саланы таңдаңыз"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
                 android:textSize="24sp" />
 
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="180dp"
                 android:layout_height="137dp"
-                android:layout_marginLeft="60dp"/>
+                android:layout_marginLeft="60dp" />
 
             <TextView
                 android:id="@+id/textView"
@@ -71,8 +82,12 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="40dp"
+                android:background="#8BC34A"
+                android:backgroundTint="#A4A4A4"
                 android:fontFamily="sans-serif-light"
                 android:text="Мекен жайы"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
                 android:textSize="24sp" />
 
             <EditText
@@ -95,8 +110,12 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="40dp"
+                android:background="#8BC34A"
+                android:backgroundTint="#A4A4A4"
                 android:fontFamily="sans-serif-light"
                 android:text="Өзіңіз жайлы"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
                 android:textSize="24sp" />
 
             <EditText
@@ -113,7 +132,8 @@
                 android:hint="..."
                 android:inputType="textMultiLine"
                 android:singleLine="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/idAcceptBtn"
@@ -121,6 +141,7 @@
                 android:layout_height="93dp"
                 android:layout_marginLeft="110dp"
                 android:layout_marginRight="60dp"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="#ADACAC"
                 android:onClick="onClickEngizu"
                 android:text="Енгізу"

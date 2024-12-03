@@ -10,15 +10,16 @@ public class Booking {
     private String service;
     private String date;
     private String time;
-    private String title;
+    private String nameMaster;
+
 
     // Constructor
-    public Booking(String service, String date, String time, String title, String name) {
+    public Booking(String service, String date, String time, String name,String nmaeMaster) {
         this.service = service;
         this.date = date;
         this.time = time;
-        this.title = title;
         this.name = name;
+        this.nameMaster = nmaeMaster;
     }
 
     // Getters and Setters
@@ -46,13 +47,14 @@ public class Booking {
         this.time = time;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNameMaster() {
+        return nameMaster;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNameMaster(String nameMaster) {
+        this.nameMaster = nameMaster;
     }
+
     public String getName() {
         return name;
     }

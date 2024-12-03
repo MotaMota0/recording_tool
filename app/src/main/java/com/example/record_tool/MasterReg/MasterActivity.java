@@ -1,12 +1,10 @@
-package com.example.record_tool;
+package com.example.record_tool.MasterReg;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.record_tool.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -84,6 +83,7 @@ public class MasterActivity extends AppCompatActivity {
 
 
         firestore.collection("Master")
+
                 .add(listMaster)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
