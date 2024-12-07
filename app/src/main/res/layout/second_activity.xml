@@ -21,8 +21,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="650dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:onClick="SaveDataTime"
             android:padding="16dp">
 
@@ -45,23 +45,21 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/spinnerServices"
-                    android:layout_width="match_parent"
-                    android:layout_height="86dp"
-                    android:layout_marginBottom="16dp"
-                    android:spinnerMode="dropdown" />
-
                 <!-- Календарь -->
 
                 <!-- Выбор времени -->
 
                 <CalendarView
                     android:id="@+id/calendarView"
-                    android:backgroundTint="#FFFFFF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/idSelectTime"
@@ -93,6 +91,7 @@
                     android:id="@+id/btnConfirmBooking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
                     android:backgroundTint="#FFFFFF"
                     android:onClick="SaveDataTime"
                     android:text="Confirm Booking"
@@ -101,7 +100,7 @@
         </ScrollView>
     </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -110,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

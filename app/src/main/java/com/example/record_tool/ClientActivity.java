@@ -35,7 +35,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class ClientActivity extends AppCompatActivity {
 
@@ -44,6 +46,7 @@ public class ClientActivity extends AppCompatActivity {
     //private Spinner spinnerServices;
     private CalendarView calendarView;
     private TextView tvBookingTitle;
+    private TextView textView6;
     private EditText editText;
     private String selectedTitle;
 
@@ -59,6 +62,7 @@ public class ClientActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         tvBookingTitle = findViewById(R.id.idSelectTime);
         editText = findViewById(R.id.editTextText);
+        textView6 = findViewById(R.id.textView6);
 
 
         //String[] services = {"Haircut", "Nail Service", "Massage", "Facial"};
@@ -73,12 +77,12 @@ public class ClientActivity extends AppCompatActivity {
 
         selectedTitle = "";
         // Устанавливаем обработчик для BottomNavigationView
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        /*BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         // Устанавливаем начальный фрагмент при запуске
-        /*if (savedInstanceState == null) {
+        *//*if (savedInstanceState == null) {
             replaceFragment(new FragmentClient());
-        }*/
+        }*//*
 
         // Обрабатываем выбор пунктов меню
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -98,12 +102,12 @@ public class ClientActivity extends AppCompatActivity {
                     selectedFragment = new FragmentClient(); // Замените на другой фрагмент при необходимости
                 }
 
-                /*if (selectedFragment != null) {
+                *//*if (selectedFragment != null) {
                     replaceFragment(selectedFragment);
-                }*/
+                }*//*
                 return true;
             }
-        });
+        });*/
 
         // Обработчик нажатия на кнопку подтверждения
         buttonConfirmBooking.setOnClickListener(new View.OnClickListener() {
@@ -118,73 +122,68 @@ public class ClientActivity extends AppCompatActivity {
                 // Делаем форматирование даты в нужном формате
                 String selectedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
                 // Обновляем дату в TextView (или можете записать в переменную)
-                tvBookingTitle.setText(selectedDate);
+                textView6.setText(selectedDate);
             }
         });
     }
 
     // Метод для добавления данных в Firebase
     public void SetDataToFirebase() {
-        // Получаем выбранную услугу из спиннера
-        //String selectedService = spinnerServices.getSelectedItem().toString();
+            // Получаем дату и время бронирования
+            String date = textView6.getText().toString();
+            int hour = timePicker.getHour();
+            int minute = timePicker.getMinute();
+            String time = String.format(Locale.getDefault(), "%02d:%02d:00", hour, minute);
 
-        // Получаем отформатированную дату с календаря
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        //String date = sdf.format(calendarView.getDate());
+            // Получаем имя клиента и выбранный пункт меню
+            String name = editText.getText().toString();
+            String slctTitle = selectedTitle;
 
-        // Получаем отформатированную дату с календаря
-        String date = tvBookingTitle.getText().toString();
+            // Получение имени мастера из адаптера
+            String masterName = MasterAdapter.MasterViewHolder.getMasterName();
+
+            // Текущее серверное время (timestamp) для хранения времени создания записи
+            Map<String, Object> bookingData = new HashMap<>();
+            bookingData.put("title", slctTitle);
+            bookingData.put("date", date);
+            bookingData.put("time", time);
+            bookingData.put("name", name);
+            bookingData.put("masterName", masterName);
+            bookingData.put("timestamp", com.google.firebase.firestore.FieldValue.serverTimestamp()); // Серверное время
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            // Проверка на занятое время
+            db.collection("bookings")
+                    .whereEqualTo("date", date)
+                    .whereEqualTo("time", time)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // Если запись с таким временем уже существует
+                            Toast.makeText(ClientActivity.this, "Время уже забронировано! Выберите другое время", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Добавляем данные в коллекцию
+                            db.collection("bookings")
+                                    .add(bookingData)
+                                    .addOnSuccessListener(documentReference -> {
+                                        Log.d("TAG", "Booking saved! Document ID: " + documentReference.getId());
+                                        Toast.makeText(ClientActivity.this, "Запись успешно сохранена!", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.w("TAG", "Error adding booking", e);
+                                        Toast.makeText(ClientActivity.this, "Ошибка при сохранении записи", Toast.LENGTH_SHORT).show();
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w("TAG", "Error checking booking time", e);
+                        Toast.makeText(ClientActivity.this, "Ошибка при проверке времени", Toast.LENGTH_SHORT).show();
+                    });
+        }
 
 
-        // Получаем время из timePicker
-        int hour = timePicker.getHour(); // Для Android 6.0 и выше
-        int minute = timePicker.getMinute();
-        String time = String.format(Locale.getDefault(), "%02d:%02d:00", hour, minute);
-
-
-
-        String name = editText.getText().toString();
-        String slctTitle = selectedTitle;
-
-        //Получение значение из класса MasterAdaper
-        String masterName = MasterAdapter.MasterViewHolder.getMasterName();
-        // Создаем объект бронирования
-        Booking booking = new Booking(slctTitle, date, time,name,masterName);
-
-        // Получаем экземпляр Firebase Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Добавляем данные в Firestore
-        db.collection("bookings")
-                .whereEqualTo("date", date)
-                .whereEqualTo("time", time)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        // Если запись с таким временем уже существует
-                        Toast.makeText(ClientActivity.this, "Время уже забронировано! Выберите другое время", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Если записи нет, добавляем новое бронирование
-                        db.collection("bookings")
-                                .add(booking)
-                                .addOnSuccessListener(documentReference -> {
-                                    Log.d("TAG", "Booking saved! Document ID: " + documentReference.getId());
-
-                                    Toast.makeText(ClientActivity.this, "Запись успешно сохранена!", Toast.LENGTH_SHORT).show();
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.w("TAG", "Error adding booking", e);
-                                    Toast.makeText(ClientActivity.this, "Ошибка при сохранении записи", Toast.LENGTH_SHORT).show();
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("TAG", "Error checking booking time", e);
-                    Toast.makeText(ClientActivity.this, "Ошибка при проверке времени", Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    // Метод для замены фрагмента
+        // Метод для замены фрагмента
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentLayout, fragment);

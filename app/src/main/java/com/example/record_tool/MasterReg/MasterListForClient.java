@@ -1,6 +1,7 @@
 package com.example.record_tool.MasterReg;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -8,16 +9,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.record_tool.Corzina.FragmentClient;
 import com.example.record_tool.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +48,62 @@ public class MasterListForClient extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+        // Устанавливаем начальный фрагмент при запуске
+        /*if (savedInstanceState == null) {
+            replaceFragment(new FragmentClient());
+        }*/
+
+        // Обрабатываем выбор пунктов меню
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NotNull MenuItem menuItem) {
+                Fragment selectedFragment = null;
+
+
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.menu_shashtaraz) {
+
+
+                    selectedFragment = new Fragment1();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.container, selectedFragment);
+                    ft.commit();
+
+
+                } else if (itemId == R.id.menu_salon) {
+                    selectedFragment = new Fragment2();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.container, selectedFragment);
+                    ft.commit();
+
+                } else if (itemId == R.id.menu_technica) {
+
+                    selectedFragment = new Fragment3();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.container, selectedFragment);
+                    ft.commit();
+
+                } else if (itemId == R.id.menu_clining) {
+
+                    selectedFragment = new Fragment4();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.container, selectedFragment);
+                    ft.commit();
+
+
+
+
+                }
+
+                /*if (selectedFragment != null) {
+                    replaceFragment(selectedFragment);
+                }*/
+                return true;
+            }
+        });
         masterList = new ArrayList<>();
         adapter = new MasterAdapter(masterList);
         recyclerView.setAdapter(adapter);

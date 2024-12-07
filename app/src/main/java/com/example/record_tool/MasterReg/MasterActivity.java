@@ -1,10 +1,13 @@
 package com.example.record_tool.MasterReg;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.record_tool.ActivityListWithClient.ListWithClient;
 import com.example.record_tool.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,10 +32,11 @@ public class MasterActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore ;
     private Map<String , Object> listMaster;
-    private EditText masterName ;
+    private TextView masterName ;
     private EditText masterAdress ;
     private EditText aboutMaster ;
     private String listBooking;
+    private TextView textViewNameMaster;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +52,17 @@ public class MasterActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
 
-        masterName = findViewById(R.id.idNameMaster);
+        masterName = findViewById(R.id.textViewNameMaster);
         masterAdress = findViewById(R.id.idAdressMaster);
+
+        textViewNameMaster = findViewById(R.id.textViewNameMaster);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String nameM = sharedPreferences.getString("name", "Default name");
+        textViewNameMaster.setText(nameM);
+
+
+
         aboutMaster = findViewById(R.id.idInfoMaster);
         ListView listView = findViewById(R.id.listView);
         String[] options = {"Техника", "Шаштараз", "Сұлулық салоны", "Клининг"};
@@ -73,13 +87,14 @@ public class MasterActivity extends AppCompatActivity {
 
 
         String infoMaster = aboutMaster.getText().toString();
-
         listMaster = new HashMap<>();
         listMaster.put("Name", masterName.getText().toString());
         listMaster.put("Adress", masterAdress.getText().toString());
         listMaster.put("Info", infoMaster);
         listMaster.put("Service", listBooking);
-
+        Intent intent = new Intent(MasterActivity.this, ListWithClient.class);
+        intent.putExtra("masterName", masterName.getText().toString());
+        startActivity(intent);
 
 
         firestore.collection("Master")
@@ -89,6 +104,7 @@ public class MasterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         Toast.makeText(MasterActivity.this,"Satty jazyldy",Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -100,5 +116,11 @@ public class MasterActivity extends AppCompatActivity {
 
 
     }
+    public void OnViewList(View view){
+        Intent intent = new Intent(MasterActivity.this , ListWithClient.class);
+        startActivity(intent);
+    }
+
+
 
 }

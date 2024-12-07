@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="406dp"
-        android:layout_height="429dp"
+        android:layout_width="419dp"
+        android:layout_height="549dp"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +34,24 @@
             android:inputType="textPassword"
             android:textSize="24sp" />
 
+            <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="30dp"
+            android:hint="Name"
+            android:inputType="textEmailAddress"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonMaster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginBottom="30dp"
+            android:text="Master"
+            android:textSize="24sp" />
+
         <Button
             android:id="@+id/registerButton"
             android:layout_width="377dp"
@@ -42,6 +60,7 @@
             android:fontFamily="sans-serif-light"
             android:text="Енгізу"
             android:textSize="24sp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

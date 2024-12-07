@@ -8,8 +8,8 @@
     <LinearLayout
         android:id="@+id/idMasterList"
 
-        android:layout_width="300dp"
-        android:layout_height="118dp"
+        android:layout_width="367dp"
+        android:layout_height="94dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:orientation="vertical"
@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp">
+        tools:layout_editor_absoluteY="2dp">
 
         <TextView
             android:id="@+id/nameTextView"
@@ -37,4 +37,5 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
