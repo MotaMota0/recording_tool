@@ -13,8 +13,8 @@
 
     <FrameLayout
         android:id="@+id/fragmentLayout"
-        android:layout_width="0dp"
-        android:layout_height="695dp"
+        android:layout_width="413dp"
+        android:layout_height="723dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,18 +22,50 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="SaveDataTime"
             android:padding="16dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <!-- Заголовок -->
 
                 <!-- Выпадающий список для выбора услуги -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/exitBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ripple_effect"
+
+                        android:fontFamily="sans-serif-light"
+                        android:onClick="exitONBack"
+                        android:text="Артқа"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/exitBtn2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="120dp"
+                        android:background="@drawable/ripple_effect"
+
+                        android:fontFamily="sans-serif-light"
+                        android:onClick="settingONBack"
+                        android:text="Өзгерту"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tvBookingTitle"
                     android:layout_width="match_parent"
@@ -41,7 +73,7 @@
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="Book a Service"
+                    android:text="Жазылу"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -54,24 +86,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:backgroundTint="#FFFFFF" />
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#ffffff" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/idSelectTime"
-                    android:layout_width="404dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Select time and Write your name :)"
+                    android:layout_width="365dp"
+                    android:layout_height="82dp"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Атыңызды жазып,уақытты таңдаңыз :)"
                     android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
                     android:textSize="24sp" />
 
                 <EditText
                     android:id="@+id/editTextText"
-                    android:layout_width="match_parent"
+                    android:layout_width="351dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="30dp"
@@ -84,6 +122,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="40dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="#FFFFFF"
                     android:timePickerMode="spinner" />
 
                 <!-- Кнопка для подтверждения бронирования -->
@@ -93,9 +133,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="40dp"
                     android:backgroundTint="#FFFFFF"
-                    android:onClick="SaveDataTime"
-                    android:text="Confirm Booking"
-                    android:textColor="#000000" />
+                    android:fontFamily="sans-serif-light"
+                    android:text="Жазылуды растау"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

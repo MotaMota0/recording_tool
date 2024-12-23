@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MasterReg.MasterListForClient">
+    tools:context=".service.MasterListForClient">
 
     <LinearLayout
         android:id="@+id/idMasterList"
-        android:layout_width="300dp"
+        android:layout_width="281dp"
         android:layout_height="118dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/colorPrimaryCool"
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +25,7 @@
             android:id="@+id/nameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
             android:text="Name"
             android:textColor="#000"
@@ -32,6 +35,7 @@
             android:id="@+id/addressTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="Address"
             android:textColor="#555"
             android:textSize="16sp" />

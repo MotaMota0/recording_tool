@@ -49,6 +49,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="150dp"
             android:layout_marginBottom="30dp"
+            android:allowClickWhenDisabled="true"
+            android:checked="false"
+            android:focusable="auto"
+            android:fontFamily="sans-serif-light"
             android:text="Master"
             android:textSize="24sp" />
 
@@ -56,7 +60,7 @@
             android:id="@+id/registerButton"
             android:layout_width="377dp"
             android:layout_height="87dp"
-            android:backgroundTint="#A6AAAB"
+            android:backgroundTint="@color/colorPrimaryCool"
             android:fontFamily="sans-serif-light"
             android:text="Енгізу"
             android:textSize="24sp" />

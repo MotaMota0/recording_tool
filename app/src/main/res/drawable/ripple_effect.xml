@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#AFA74C"> <!-- Цвет ripple эффекта (нажатия) -->
+
+        <shape android:shape="rectangle">
+            <solid android:color="#9CA0A2" /> <!-- Цвет фона (маска) -->
+        </shape>
+
+</ripple>
+
+
